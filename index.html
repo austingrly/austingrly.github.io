@@ -1,3 +1,96 @@
-# austingrly.github.io
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character encoding and viewport for correct rendering -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTTP Protocol | IT 3203 Project</title>
+  <!-- Single external stylesheet for all pages -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-Intro to Web Dev website
+  <!-- Page Wrapper (CSS Grid layout) -->
+  <div class="page-wrapper">
+
+    <!-- Site banner / header -->
+    <header class="site-header">
+      <h1>HTTP Protocol</h1>
+      <p>The Foundation of Web Communication</p>
+    </header>
+
+    <!-- Navigation bar (consistent on every page) -->
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="topic1.html">HTTP Basics</a></li>
+        <li><a href="topic2.html">HTTP Versions</a></li>
+        <li><a href="concepts.html">Key Concepts</a></li>
+        <li><a href="references.html">References</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+      <!-- Abstract / Introduction card -->
+      <div class="card">
+        <h2>Introduction</h2>
+        <p>
+          When using the internet, you are always relying on the <strong>Hypertext Transfer Protocol (HTTP)</strong>.
+          It is present in every webpage you load, every image you view, and every form you submit.
+          Browsers, servers, mobile apps, and cloud platforms all use this protocol to communicate.
+          HTTP is the foundation of web communication and will continue to evolve as the web grows
+          in size and complexity every day.
+        </p>
+        <p>
+          This site explores how HTTP works, how it has evolved from HTTP/0.9 to HTTP/3,
+          the role of HTTPS and security, and how the protocol powers the modern web.
+        </p>
+      </div>
+
+      <!-- Key terms card -->
+      <div class="card">
+        <h2>Key Terms</h2>
+        <div class="key-terms">
+          <span class="key-term">HTTP</span>
+          <span class="key-term">HTTPS</span>
+          <span class="key-term">Request / Response</span>
+          <span class="key-term">Status Codes</span>
+          <span class="key-term">TLS / SSL</span>
+          <span class="key-term">TCP/IP</span>
+          <span class="key-term">Multiplexing</span>
+          <span class="key-term">QUIC</span>
+        </div>
+      </div>
+
+      <!-- Table of contents card -->
+      <div class="card">
+        <h2>Table of Contents</h2>
+        <ol class="toc-list">
+          <li><a href="topic1.html">HTTP Basics - Requests, Responses &amp; Structure</a></li>
+          <li><a href="topic2.html">HTTP Versions - From 0.9 to HTTP/3</a></li>
+          <li><a href="concepts.html">Key Concepts</a></li>
+          <li><a href="references.html">References &amp; Resources</a></li>
+          <li><a href="about.html">About This Project</a></li>
+        </ol>
+      </div>
+
+    </main>
+
+    <!-- Footer (consistent on every page) -->
+    <footer id="site-footer">
+      <p>
+        This is a class project for
+        <a href="https://ksuweb.github.io/IT3203/" target="_blank">IT 3203 - Web Development</a>
+        &nbsp;|&nbsp; Hosted at
+        <a href="https://austingrly.github.io" target="_blank">austingrly.github.io</a>
+      </p>
+    </footer>
+
+  </div>
+  <!-- end .page-wrapper -->
+
+</body>
+</html>

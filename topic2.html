@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTTP Versions | HTTP Protocol</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <h1>HTTP Protocol</h1>
+      <p>The Foundation of Web Communication</p>
+    </header>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="topic1.html">HTTP Basics</a></li>
+        <li><a href="topic2.html" class="active">HTTP Versions</a></li>
+        <li><a href="concepts.html">Key Concepts</a></li>
+        <li><a href="references.html">References</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+
+      <h1>HTTP Versions</h1>
+      <p>From the early web to modern high-performance protocols.</p>
+
+      <!-- Version overview table -->
+      <div class="card">
+        <h2>Version Overview</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Year</th>
+              <th>Key Features</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HTTP/0.9</td>
+              <td>1991</td>
+              <td>Simple text retrieval only; no headers or status codes</td>
+            </tr>
+            <tr>
+              <td>HTTP/1.0</td>
+              <td>1996</td>
+              <td>Added headers, status codes, and content types</td>
+            </tr>
+            <tr>
+              <td>HTTP/1.1</td>
+              <td>1997</td>
+              <td>Persistent connections, better caching, virtual hosting</td>
+            </tr>
+            <tr>
+              <td>HTTP/2</td>
+              <td>2015</td>
+              <td>Multiplexing, header compression, binary framing</td>
+            </tr>
+            <tr>
+              <td>HTTP/3</td>
+              <td>2022</td>
+              <td>Runs on QUIC, faster connection setup, better on mobile</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- HTTP/0.9 -->
+      <div class="card">
+        <h2>HTTP/0.9 - The Beginning</h2>
+        <p>
+          The history of HTTP begins in the early 1990s when <strong>Tim Berners-Lee</strong>
+          developed the first version while working at CERN. HTTP/0.9 supported only simple
+          text retrieval and lacked headers or status codes. It assumed a very limited use case:
+          scientists sharing static documents over trusted networks. Performance, security, and
+          scalability were not major concerns because the web itself was small and experimental.
+        </p>
+      </div>
+
+      <!-- HTTP/1.0 -->
+      <div class="card">
+        <h2>HTTP/1.0 - Expanding Capabilities</h2>
+        <p>
+          HTTP/1.0 introduced <strong>headers</strong>, <strong>status codes</strong>, and
+          <strong>content types</strong>, which allowed browsers to display images and different
+          file formats. These additions separated metadata from content and allowed clients and
+          servers to negotiate how information should be handled.
+        </p>
+        <p>
+          However, HTTP/1.0 still opened a new TCP connection for every request, which caused
+          inefficiency as webpages became more complex.
+        </p>
+      </div>
+
+      <!-- HTTP/1.1 -->
+      <div class="card">
+        <h2>HTTP/1.1 - The Backbone of the Web</h2>
+        <p>
+          HTTP/1.1 improved performance by adding:
+        </p>
+        <ul>
+          <li><strong>Persistent connections</strong> - multiple requests reuse a single TCP connection</li>
+          <li><strong>Better caching</strong> - browsers can reuse stored resources to reduce data transfers</li>
+          <li><strong>Virtual hosting</strong> - multiple websites can share a single IP address</li>
+        </ul>
+        <p>
+          This version became the backbone of the web for more than a decade and still remains
+          widely supported today due to its stability and compatibility.
+        </p>
+      </div>
+
+      <!-- HTTP/2 -->
+      <div class="card">
+        <h2>HTTP/2 - Performance Improvements</h2>
+        <p>
+          As the web expanded, HTTP/1.1 began to show limits. Modern webpages load many resources
+          including scripts, images, fonts, and media files, sometimes requiring dozens or hundreds
+          of requests. HTTP/2 addressed these issues by introducing:
+        </p>
+        <ul>
+          <li><strong>Multiplexing</strong> - multiple requests travel simultaneously over one connection</li>
+          <li><strong>Header compression</strong> - reduces repetitive metadata and bandwidth usage</li>
+          <li><strong>Binary framing</strong> - machines process data faster than text-based formatting</li>
+        </ul>
+        <p>
+          These improvements allowed the protocol to perform better without changing how developers
+          wrote applications.
+        </p>
+      </div>
+
+      <!-- HTTP/3 -->
+      <div class="card">
+        <h2>HTTP/3 - The Next Step</h2>
+        <p>
+          HTTP/3 runs on the <strong>QUIC transport protocol</strong> instead of TCP, reducing
+          connection setup time and improving performance on unreliable networks. QUIC handles
+          packet loss more efficiently and avoids head-of-line blocking, a common issue with
+          TCP-based connections.
+        </p>
+        <p>
+          This benefits users on mobile, wireless, or congested networks. Major companies and
+          content delivery networks already support HTTP/3, and adoption continues to grow.
+        </p>
+      </div>
+
+      <!-- Page navigation -->
+      <p>
+        <a href="topic1.html">&larr; Previous: HTTP Basics</a>
+        &nbsp;&nbsp;
+        <a href="concepts.html">Next: Key Concepts &rarr;</a>
+      </p>
+
+    </main>
+
+    <footer id="site-footer">
+      <p>
+        This is a class project for
+        <a href="https://ksuweb.github.io/IT3203/" target="_blank">IT 3203 - Web Development</a>
+        &nbsp;|&nbsp; Hosted at
+        <a href="https://austingrly.github.io" target="_blank">austingrly.github.io</a>
+      </p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

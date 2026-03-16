@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Concepts | HTTP Protocol</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <h1>HTTP Protocol</h1>
+      <p>The Foundation of Web Communication</p>
+    </header>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="topic1.html">HTTP Basics</a></li>
+        <li><a href="topic2.html">HTTP Versions</a></li>
+        <li><a href="concepts.html" class="active">Key Concepts</a></li>
+        <li><a href="references.html">References</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+
+      <h1>Key Concepts</h1>
+      <p>Seven essential terms and ideas to understand HTTP.</p>
+
+      <!-- Concept grid layout using CSS Grid -->
+      <div class="concept-grid">
+
+        <!-- Concept 1 -->
+        <div class="concept-item card">
+          <h3>1. HTTP (Hypertext Transfer Protocol)</h3>
+          <p>
+            The application-layer protocol used to transfer data on the web. It defines how
+            requests from clients (browsers) and responses from servers are structured and
+            communicated. Every webpage load relies on HTTP.
+          </p>
+        </div>
+
+        <!-- Concept 2 -->
+        <div class="concept-item card">
+          <h3>2. Request / Response Cycle</h3>
+          <p>
+            The fundamental pattern of HTTP communication. The client sends a <em>request</em>
+            with a method, URL, and headers. The server sends back a <em>response</em> with a
+            status code, headers, and (usually) a body containing data.
+          </p>
+        </div>
+
+        <!-- Concept 3 -->
+        <div class="concept-item card">
+          <h3>3. Stateless Protocol</h3>
+          <p>
+            HTTP is stateless, meaning each request is independent. The server does not
+            remember previous requests from the same client. Cookies and sessions are used
+            to maintain state across multiple requests.
+          </p>
+        </div>
+
+        <!-- Concept 4 -->
+        <div class="concept-item card">
+          <h3>4. HTTPS &amp; TLS</h3>
+          <p>
+            HTTPS (HTTP Secure) adds a layer of encryption using <strong>Transport Layer
+            Security (TLS)</strong>. It encrypts data in transit and verifies server identity
+            using certificates issued by trusted Certificate Authorities (CAs).
+          </p>
+        </div>
+
+        <!-- Concept 5 -->
+        <div class="concept-item card">
+          <h3>5. Persistent Connections</h3>
+          <p>
+            Introduced in HTTP/1.1, persistent connections allow multiple requests to reuse
+            a single TCP connection. This reduces overhead from repeatedly opening and closing
+            connections and improves page load times.
+          </p>
+        </div>
+
+        <!-- Concept 6 -->
+        <div class="concept-item card">
+          <h3>6. Multiplexing</h3>
+          <p>
+            A key feature of HTTP/2 that allows multiple requests and responses to travel
+            simultaneously over a single connection without blocking each other. This
+            significantly improves performance on modern web pages with many resources.
+          </p>
+        </div>
+
+        <!-- Concept 7 (full width) -->
+        <div class="concept-item card" style="grid-column: 1 / -1;">
+          <h3>7. QUIC Transport Protocol</h3>
+          <p>
+            QUIC is the transport protocol underlying HTTP/3, developed by Google and
+            standardized by the IETF. Unlike TCP, QUIC was designed with modern web use
+            cases in mind, including faster connection setup (0-RTT in some cases),
+            built-in encryption, and better handling of packet loss on mobile and
+            unstable networks.
+          </p>
+        </div>
+
+      </div>
+      <!-- end .concept-grid -->
+
+      <!-- Comparison table as additional HTML table requirement -->
+      <div class="card" style="margin-top: 2rem;">
+        <h2>Quick Comparison: HTTP vs HTTPS</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>HTTP</th>
+              <th>HTTPS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Encryption</td>
+              <td>None</td>
+              <td>TLS encryption</td>
+            </tr>
+            <tr>
+              <td>Data privacy</td>
+              <td>Data visible to intermediaries</td>
+              <td>Data is encrypted in transit</td>
+            </tr>
+            <tr>
+              <td>Authentication</td>
+              <td>None</td>
+              <td>Server identity verified via certificates</td>
+            </tr>
+            <tr>
+              <td>Browser indicator</td>
+              <td>Warning displayed</td>
+              <td>Padlock icon shown</td>
+            </tr>
+            <tr>
+              <td>Required for</td>
+              <td>Basic sites (discouraged)</td>
+              <td>Login, payments, modern features</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+    <footer id="site-footer">
+      <p>
+        This is a class project for
+        <a href="https://ksuweb.github.io/IT3203/" target="_blank">IT 3203 - Web Development</a>
+        &nbsp;|&nbsp; Hosted at
+        <a href="https://austingrly.github.io" target="_blank">austingrly.github.io</a>
+      </p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

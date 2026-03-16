@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTTP Basics | HTTP Protocol</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <h1>HTTP Protocol</h1>
+      <p>The Foundation of Web Communication</p>
+    </header>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="topic1.html" class="active">HTTP Basics</a></li>
+        <li><a href="topic2.html">HTTP Versions</a></li>
+        <li><a href="concepts.html">Key Concepts</a></li>
+        <li><a href="references.html">References</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+
+      <h1>HTTP Basics</h1>
+      <p>Requests, Responses, and the Structure of Web Communication</p>
+
+      <!-- What is HTTP -->
+      <div class="card">
+        <h2>What Is HTTP?</h2>
+        <p>
+          HTTP was made to solve the problem of systems being able to exchange web resources
+          over a network. When you type an address into the browser, that browser sends an
+          <strong>HTTP request</strong> to the server. The server processes that request and
+          sends back an <strong>HTTP response</strong>. This exchange happens continuously in
+          the background, often hundreds of times when loading a single page.
+        </p>
+        <p>
+          HTTP works on top of lower-level protocols such as <strong>TCP/IP</strong>, which
+          handles routing and delivery. HTTP defines what the message represents, what action
+          will occur, and how the data should be interpreted when received.
+        </p>
+      </div>
+
+      <!-- Structure of a transaction -->
+      <div class="card">
+        <h2>Structure of an HTTP Transaction</h2>
+        <p>Every HTTP transaction includes the following components:</p>
+        <ul>
+          <li><strong>Request</strong> - tells the server what the client is looking for</li>
+          <li><strong>Response</strong> - tells the client what occurred</li>
+          <li><strong>Headers</strong> - provide extra info (content type, caching, authentication)</li>
+          <li><strong>Body</strong> - carries the actual data being transferred</li>
+        </ul>
+
+        <!-- Image placeholder for HTTP transaction diagram -->
+        <img
+          src="https://media.geeksforgeeks.org/wp-content/uploads/20210905091508/ImageOfHTTPRequestResponse-660x374.png"
+          alt="Diagram of an HTTP request and response cycle"
+          style="max-width:600px;"
+        />
+        <p style="text-align:center; font-size:0.85rem; color:#666;">
+          Figure 1: A simplified HTTP request/response cycle. (Source: GeeksforGeeks)
+        </p>
+      </div>
+
+      <!-- HTTP Methods table -->
+      <div class="card">
+        <h2>HTTP Request Methods</h2>
+        <p>
+          Every request includes a <strong>method</strong> that specifies what action should
+          be performed. The four most common methods are:
+        </p>
+
+        <!-- Table: required HTML element -->
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Purpose</th>
+              <th>Example Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>GET</code></td>
+              <td>Retrieve data from the server</td>
+              <td>Loading a webpage or image</td>
+            </tr>
+            <tr>
+              <td><code>POST</code></td>
+              <td>Submit new data to the server</td>
+              <td>Submitting a form or login</td>
+            </tr>
+            <tr>
+              <td><code>PUT</code></td>
+              <td>Update existing data on the server</td>
+              <td>Editing a profile or record</td>
+            </tr>
+            <tr>
+              <td><code>DELETE</code></td>
+              <td>Remove data from the server</td>
+              <td>Deleting an account or post</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Status Codes -->
+      <div class="card">
+        <h2>HTTP Status Codes</h2>
+        <p>
+          The response includes a <strong>status code</strong> that tells the client what
+          occurred. This allows browsers and apps to react appropriately without guessing the situation.
+        </p>
+        <ul>
+          <li><strong>200 OK</strong> - The request was successful</li>
+          <li><strong>301 Moved Permanently</strong> - The resource has been moved to a new URL</li>
+          <li><strong>400 Bad Request</strong> - The server could not understand the request</li>
+          <li><strong>401 Unauthorized</strong> - Authentication is required</li>
+          <li><strong>403 Forbidden</strong> - The server refuses to fulfill the request</li>
+          <li><strong>404 Not Found</strong> - The requested resource does not exist</li>
+          <li><strong>500 Internal Server Error</strong> - The server encountered an unexpected condition</li>
+        </ul>
+      </div>
+
+      <!-- Security section -->
+      <div class="card">
+        <h2>HTTP and Security: HTTPS</h2>
+        <p>
+          HTTP itself does not encrypt data, which allowed attackers to intercept traffic,
+          steal credentials, and manipulate content. <strong>HTTPS</strong> solved this problem
+          by combining HTTP with <strong>Transport Layer Security (TLS)</strong>. HTTPS encrypts
+          data in transit and verifies server identity, protecting users from eavesdropping
+          and tampering.
+        </p>
+        <p>
+          Modern browsers now warn users when websites do not use HTTPS, and many web features
+          require it by default.
+        </p>
+      </div>
+
+      <!-- Page navigation -->
+      <p>
+        <a href="topic2.html">Next: HTTP Versions &rarr;</a>
+      </p>
+
+    </main>
+
+    <footer id="site-footer">
+      <p>
+        This is a class project for
+        <a href="https://ksuweb.github.io/IT3203/" target="_blank">IT 3203 – Web Development</a>
+        &nbsp;|&nbsp; Hosted at
+        <a href="https://austingrly.github.io" target="_blank">austingrly.github.io</a>
+      </p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
