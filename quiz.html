@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz | HTTP Protocol</title>
+  <!-- Single shared stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Quiz-specific styles scoped to this page -->
+  <style>
+    /* ---- Quiz Form Layout ---- */
+    .quiz-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    /* Each question block */
+    .question-block {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 22px 26px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    /* Question number label */
+    .question-label {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Hint text below question */
+    .question-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      display: block;
+      font-style: italic;
+    }
+
+    /* Flex column layout for answer options */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    /* Individual radio/checkbox option row */
+    .option-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .option-row:hover {
+      background-color: #eef4fb;
+    }
+
+    /* Text input for fill-in-the-blank */
+    .fill-blank-input {
+      width: 100%;
+      max-width: 380px;
+      padding: 9px 13px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: var(--font-main);
+      color: var(--text);
+      background-color: #fff;
+      margin-top: 0.4rem;
+      transition: border-color 0.2s;
+    }
+
+    .fill-blank-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(45,127,193,0.15);
+    }
+
+    /* Submit and Reset buttons */
+    .quiz-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 11px 28px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-main);
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--accent);
+    }
+
+    .btn-reset {
+      background-color: transparent;
+      color: var(--primary);
+      padding: 10px 24px;
+      border: 2px solid var(--primary);
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-main);
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+      background-color: var(--primary);
+      color: #fff;
+    }
+
+    /* ---- Results Section ---- */
+    #results-section {
+      display: none; /* hidden until quiz is submitted */
+    }
+
+    /* Score banner shown at top of results */
+    .score-banner {
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Green for pass */
+    .score-banner.pass {
+      background-color: #d4edda;
+      border: 2px solid #28a745;
+      color: #155724;
+    }
+
+    /* Red for fail */
+    .score-banner.fail {
+      background-color: #f8d7da;
+      border: 2px solid #dc3545;
+      color: #721c24;
+    }
+
+    .score-banner h2 {
+      color: inherit;
+      font-size: 1.6rem;
+      margin-bottom: 0.3rem;
+      margin-top: 0;
+    }
+
+    .score-banner .score-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+
+    /* Per-question result card */
+    .result-item {
+      border-radius: 6px;
+      padding: 18px 22px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    /* Correct answer result */
+    .result-item.correct {
+      background-color: #d4edda;
+      border-color: #28a745;
+    }
+
+    /* Incorrect answer result */
+    .result-item.incorrect {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+    }
+
+    .result-item .result-status {
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .result-item.correct .result-status {
+      color: #155724;
+    }
+
+    .result-item.incorrect .result-status {
+      color: #721c24;
+    }
+
+    .result-item .result-question {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .result-item .result-your-answer {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .result-item .result-correct-answer {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #155724;
+      margin-top: 0.3rem;
+    }
+
+    /* Point value badge */
+    .points-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 12px;
+      float: right;
+    }
+
+    .correct .points-badge {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .incorrect .points-badge {
+      background-color: #dc3545;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Shared site header -->
+    <header class="site-header">
+      <h1>HTTP Protocol</h1>
+      <p>The Foundation of Web Communication</p>
+    </header>
+
+    <!-- Navigation — quiz link added, active state set -->
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="topic1.html">HTTP Basics</a></li>
+        <li><a href="topic2.html">HTTP Versions</a></li>
+        <li><a href="concepts.html">Key Concepts</a></li>
+        <li><a href="quiz.html" class="active">Quiz</a></li>
+        <li><a href="references.html">References</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+
+      <h1>Self-Assessment Quiz</h1>
+      <p>Test your understanding of HTTP after reading the site. Five questions covering protocol basics, status codes, versions, and security.</p>
+
+      <!-- =====================================================
+           QUIZ FORM
+           1 fill-in-blank, 3 multiple choice, 1 multi-select
+           ===================================================== -->
+      <form id="quiz-form" class="quiz-form" novalidate>
+
+        <!-- ---- Question 1: Fill-in-the-blank ---- -->
+        <div class="question-block" id="q1-block">
+          <label class="question-label" for="q1">Question 1 of 5 — Fill in the Blank</label>
+          <p>HTTP stands for <strong>Hypertext Transfer ___________</strong>.</p>
+          <span class="question-hint">Type the missing word (one word answer).</span>
+          <!-- Text input is the appropriate control for a free-text fill-in-the-blank -->
+          <input
+            type="text"
+            id="q1"
+            name="q1"
+            class="fill-blank-input"
+            placeholder="Your answer..."
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Fill in the blank answer for question 1"
+          />
+        </div>
+
+        <!-- ---- Question 2: Multiple Choice (single correct) ---- -->
+        <div class="question-block" id="q2-block">
+          <label class="question-label">Question 2 of 5 — Multiple Choice</label>
+          <p>Which HTTP status code indicates that a requested resource was <strong>not found</strong> on the server?</p>
+          <span class="question-hint">Select one answer.</span>
+          <!-- Radio inputs enforce single-selection, appropriate for one-correct-answer questions -->
+          <div class="options" role="radiogroup" aria-label="Question 2 options">
+            <label class="option-row">
+              <input type="radio" name="q2" value="200" /> 200 OK
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q2" value="301" /> 301 Moved Permanently
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q2" value="404" /> 404 Not Found
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q2" value="500" /> 500 Internal Server Error
+            </label>
+          </div>
+        </div>
+
+        <!-- ---- Question 3: Multiple Choice (single correct) ---- -->
+        <div class="question-block" id="q3-block">
+          <label class="question-label">Question 3 of 5 — Multiple Choice</label>
+          <p>Which HTTP version introduced <strong>multiplexing</strong>, allowing multiple requests to travel simultaneously over a single connection?</p>
+          <span class="question-hint">Select one answer.</span>
+          <div class="options" role="radiogroup" aria-label="Question 3 options">
+            <label class="option-row">
+              <input type="radio" name="q3" value="http09" /> HTTP/0.9
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q3" value="http11" /> HTTP/1.1
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q3" value="http2" /> HTTP/2
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q3" value="http3" /> HTTP/3
+            </label>
+          </div>
+        </div>
+
+        <!-- ---- Question 4: Multiple Choice (single correct) ---- -->
+        <div class="question-block" id="q4-block">
+          <label class="question-label">Question 4 of 5 — Multiple Choice</label>
+          <p>HTTPS adds security to HTTP by using which technology to encrypt data in transit?</p>
+          <span class="question-hint">Select one answer.</span>
+          <div class="options" role="radiogroup" aria-label="Question 4 options">
+            <label class="option-row">
+              <input type="radio" name="q4" value="quic" /> QUIC
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q4" value="tls" /> TLS (Transport Layer Security)
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q4" value="ftp" /> FTP
+            </label>
+            <label class="option-row">
+              <input type="radio" name="q4" value="tcp" /> TCP/IP
+            </label>
+          </div>
+        </div>
+
+        <!-- ---- Question 5: Multi-select (more than one correct) ---- -->
+        <div class="question-block" id="q5-block">
+          <label class="question-label">Question 5 of 5 — Multi-Select</label>
+          <p>Which of the following are valid <strong>HTTP request methods</strong>? <em>(Select all that apply.)</em></p>
+          <span class="question-hint">Select all correct answers — there is more than one.</span>
+          <!-- Checkboxes allow multiple selections, appropriate for multi-correct questions -->
+          <div class="options" role="group" aria-label="Question 5 options">
+            <label class="option-row">
+              <input type="checkbox" name="q5" value="GET" /> GET
+            </label>
+            <label class="option-row">
+              <input type="checkbox" name="q5" value="POST" /> POST
+            </label>
+            <label class="option-row">
+              <input type="checkbox" name="q5" value="BROWSE" /> BROWSE
+            </label>
+            <label class="option-row">
+              <input type="checkbox" name="q5" value="DELETE" /> DELETE
+            </label>
+            <label class="option-row">
+              <input type="checkbox" name="q5" value="SEND" /> SEND
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit and Reset buttons -->
+        <div class="quiz-actions">
+          <button type="button" class="btn-submit" id="submit-btn">Submit Quiz</button>
+          <button type="button" class="btn-reset" id="reset-btn">Retake Quiz</button>
+        </div>
+
+      </form>
+      <!-- end #quiz-form -->
+
+      <!-- =====================================================
+           RESULTS SECTION
+           Hidden by default, shown after submission.
+           Displays overall pass/fail, total score, per-question breakdown.
+           ===================================================== -->
+      <section id="results-section" aria-live="polite">
+        <!-- Score banner inserted here by JS -->
+        <div id="score-banner-container"></div>
+        <!-- Per-question result cards inserted here by JS -->
+        <div id="results-detail"></div>
+      </section>
+
+    </main>
+
+    <footer id="site-footer">
+      <p>
+        This is a class project for
+        <a href="https://ksuweb.github.io/IT3203/" target="_blank">IT 3203 - Web Development</a>
+        &nbsp;|&nbsp; Hosted at
+        <a href="https://austingrly.github.io" target="_blank">austingrly.github.io</a>
+      </p>
+    </footer>
+
+  </div>
+  <!-- end .page-wrapper -->
+
+  <!-- =====================================================
+       QUIZ JAVASCRIPT
+       Handles submission grading and reset functionality.
+       No external libraries, vanilla JS only.
+       ===================================================== -->
+  <script>
+    // ---- Answer Key ----
+    // Each entry defines the correct answer(s) and display text for feedback.
+    const answerKey = {
+      q1: {
+        type: 'fill',
+        // Accepted answers as lowercase strings for case-insensitive comparison
+        correct: ['protocol'],
+        displayAnswer: 'Protocol',
+        questionText: 'HTTP stands for Hypertext Transfer ___________.',
+        points: 1
+      },
+      q2: {
+        type: 'radio',
+        correct: '404',
+        displayAnswer: '404 Not Found',
+        questionText: 'Which HTTP status code indicates a resource was not found?',
+        points: 1
+      },
+      q3: {
+        type: 'radio',
+        correct: 'http2',
+        displayAnswer: 'HTTP/2',
+        questionText: 'Which HTTP version introduced multiplexing?',
+        points: 1
+      },
+      q4: {
+        type: 'radio',
+        correct: 'tls',
+        displayAnswer: 'TLS (Transport Layer Security)',
+        questionText: 'HTTPS adds security using which technology?',
+        points: 1
+      },
+      q5: {
+        type: 'checkbox',
+        // All selections must match exactly — no extras, no missing
+        correct: ['GET', 'POST', 'DELETE'],
+        displayAnswer: 'GET, POST, and DELETE',
+        questionText: 'Which of the following are valid HTTP request methods?',
+        points: 2  // Worth 2 points since it requires selecting multiple correct answers
+      }
+    };
+
+    // Total possible points
+    const TOTAL_POINTS = Object.values(answerKey).reduce((sum, q) => sum + q.points, 0);
+
+    // Passing threshold: 70%
+    const PASS_THRESHOLD = 0.70;
+
+    // ---- Collect User Answers from the Form ----
+    function collectAnswers() {
+      const answers = {};
+
+      // Q1: fill-in-the-blank text input
+      const q1Input = document.getElementById('q1');
+      answers.q1 = q1Input ? q1Input.value.trim() : '';
+
+      // Q2, Q3, Q4: radio buttons (single selection)
+      ['q2', 'q3', 'q4'].forEach(qName => {
+        const selected = document.querySelector(`input[name="${qName}"]:checked`);
+        answers[qName] = selected ? selected.value : null;
+      });
+
+      // Q5: checkboxes (multiple selections)
+      const q5Checked = Array.from(document.querySelectorAll('input[name="q5"]:checked'));
+      answers.q5 = q5Checked.map(cb => cb.value);
+
+      return answers;
+    }
+
+    // ---- Grade a Single Answer ----
+    // Returns { earned, isCorrect, yourAnswerDisplay }
+    function gradeQuestion(qKey, userAnswer) {
+      const key = answerKey[qKey];
+
+      if (key.type === 'fill') {
+        // Case-insensitive comparison against accepted answers array
+        const normalized = userAnswer.toLowerCase();
+        const isCorrect = key.correct.includes(normalized);
+        return {
+          earned: isCorrect ? key.points : 0,
+          isCorrect,
+          yourAnswerDisplay: userAnswer === '' ? '(no answer given)' : `"${userAnswer}"`
+        };
+      }
+
+      if (key.type === 'radio') {
+        const isCorrect = userAnswer === key.correct;
+        // Find the label text for the selected radio button
+        const labelEl = userAnswer
+          ? document.querySelector(`input[name="${qKey}"][value="${userAnswer}"]`)?.parentElement
+          : null;
+        const labelText = labelEl ? labelEl.textContent.trim() : '(no answer selected)';
+        return {
+          earned: isCorrect ? key.points : 0,
+          isCorrect,
+          yourAnswerDisplay: labelText
+        };
+      }
+
+      if (key.type === 'checkbox') {
+        // Must match all correct answers exactly — no extras allowed
+        const sortedUser    = [...userAnswer].sort().join(',');
+        const sortedCorrect = [...key.correct].sort().join(',');
+        const isCorrect = sortedUser === sortedCorrect;
+        const displaySelected = userAnswer.length > 0
+          ? userAnswer.join(', ')
+          : '(nothing selected)';
+        return {
+          earned: isCorrect ? key.points : 0,
+          isCorrect,
+          yourAnswerDisplay: displaySelected
+        };
+      }
+
+      return { earned: 0, isCorrect: false, yourAnswerDisplay: '(unknown)' };
+    }
+
+    // ---- Build and Display Results ----
+    function showResults(answers) {
+      let totalEarned = 0;
+      const resultCards = [];
+
+      // Grade each question and accumulate score
+      Object.keys(answerKey).forEach(qKey => {
+        const result = gradeQuestion(qKey, answers[qKey]);
+        totalEarned += result.earned;
+        resultCards.push({ qKey, result, key: answerKey[qKey] });
+      });
+
+      const passed      = (totalEarned / TOTAL_POINTS) >= PASS_THRESHOLD;
+      const percentage  = Math.round((totalEarned / TOTAL_POINTS) * 100);
+      const passLabel   = passed ? 'PASS ✓' : 'FAIL ✗';
+      const bannerClass = passed ? 'pass' : 'fail';
+
+      // ---- Render Score Banner ----
+      const bannerContainer = document.getElementById('score-banner-container');
+      bannerContainer.innerHTML = `
+        <div class="score-banner ${bannerClass}">
+          <h2>${passLabel}</h2>
+          <div class="score-number">${totalEarned} / ${TOTAL_POINTS} points</div>
+          <p style="margin:0.4rem 0 0;">${percentage}% — Passing score is 70%</p>
+        </div>
+      `;
+
+      // ---- Render Per-Question Breakdown ----
+      const detailContainer = document.getElementById('results-detail');
+      const cardsHTML = resultCards.map((item, idx) => {
+        const { qKey, result, key } = item;
+        const statusClass  = result.isCorrect ? 'correct' : 'incorrect';
+        const statusLabel  = result.isCorrect ? '✓ Correct' : '✗ Incorrect';
+        const pointsLabel  = `${result.earned}/${key.points} pt${key.points > 1 ? 's' : ''}`;
+
+        return `
+          <div class="result-item ${statusClass}">
+            <span class="points-badge">${pointsLabel}</span>
+            <span class="result-status">${statusLabel}</span>
+            <p class="result-question">Q${idx + 1}: ${key.questionText}</p>
+            <p class="result-your-answer">Your answer: <strong>${result.yourAnswerDisplay}</strong></p>
+            ${!result.isCorrect
+              ? `<p class="result-correct-answer">Correct answer: ${key.displayAnswer}</p>`
+              : ''}
+          </div>
+        `;
+      }).join('');
+
+      detailContainer.innerHTML = cardsHTML;
+
+      // ---- Show the results section ----
+      const resultsSection = document.getElementById('results-section');
+      resultsSection.style.display = 'block';
+
+      // Scroll smoothly to results so the user can see their score
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ---- Validate: ensure every question has been answered ----
+    function validate(answers) {
+      if (!answers.q1) return 'Please answer Question 1 (fill in the blank).';
+      if (!answers.q2) return 'Please select an answer for Question 2.';
+      if (!answers.q3) return 'Please select an answer for Question 3.';
+      if (!answers.q4) return 'Please select an answer for Question 4.';
+      if (answers.q5.length === 0) return 'Please select at least one answer for Question 5.';
+      return null;
+    }
+
+    // ---- Submit Handler ----
+    document.getElementById('submit-btn').addEventListener('click', function () {
+      const answers = collectAnswers();
+      const error   = validate(answers);
+
+      if (error) {
+        alert(error);
+        return;
+      }
+
+      // Hide the form and show results
+      document.getElementById('quiz-form').style.display = 'none';
+      showResults(answers);
+    });
+
+    // ---- Reset / Retake Handler ----
+    // Clears all inputs and hides the results section
+    document.getElementById('reset-btn').addEventListener('click', function () {
+      // Reset all form inputs to their default state
+      document.getElementById('quiz-form').reset();
+
+      // Clear the dynamically inserted results HTML
+      document.getElementById('score-banner-container').innerHTML = '';
+      document.getElementById('results-detail').innerHTML = '';
+
+      // Re-show the form and hide results
+      document.getElementById('quiz-form').style.display = 'flex';
+      document.getElementById('results-section').style.display = 'none';
+
+      // Scroll back to the top of the quiz
+      document.getElementById('quiz-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+
+</body>
+</html>

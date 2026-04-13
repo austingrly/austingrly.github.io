@@ -272,14 +272,16 @@ a {
 /* ---- ID Selectors ---- */
 #site-footer {
   background-color: var(--primary);
-  color: #cde4f5;
+  /* Improved contrast: white text instead of pale blue (#cde4f5 failed contrast check) */
+  color: #ffffff;
   text-align: center;
   padding: 18px 24px;
   font-size: 0.85rem;
 }
 
 #site-footer a {
-  color: #8ac4e8;
+  /* Slightly brighter link color for better legibility against dark background */
+  color: #a8d4f0;
 }
 
 #site-footer a:hover {
