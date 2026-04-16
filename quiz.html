@@ -558,7 +558,7 @@
 
       const passed      = (totalEarned / TOTAL_POINTS) >= PASS_THRESHOLD;
       const percentage  = Math.round((totalEarned / TOTAL_POINTS) * 100);
-      const passLabel   = passed ? 'PASS ✓' : 'FAIL ✗';
+      const passLabel   = passed ? 'PASS' : 'FAIL';
       const bannerClass = passed ? 'pass' : 'fail';
 
       // ---- Render Score Banner ----
