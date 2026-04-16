@@ -272,7 +272,7 @@ a {
 /* ---- ID Selectors ---- */
 #site-footer {
   background-color: var(--primary);
-  /* Improved contrast: white text instead of pale blue (#cde4f5 failed contrast check) */
+  /* Improved contrast */
   color: #ffffff;
   text-align: center;
   padding: 18px 24px;
