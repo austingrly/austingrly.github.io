@@ -272,7 +272,7 @@ a {
 /* ---- ID Selectors ---- */
 #site-footer {
   background-color: var(--primary);
-  /* Improved contrast */
+  /* Improved contrast: white text instead of pale blue (#cde4f5 failed contrast check) */
   color: #ffffff;
   text-align: center;
   padding: 18px 24px;
@@ -292,4 +292,178 @@ a {
 /* hover effect on regular anchor links */
 a:hover {
   color: var(--primary);
+}
+
+
+/* ============================================================
+   Responsive Design:
+   Two breakpoints:
+     Tablet: max-width 768px
+     Mobile: max-width 480px
+   The "mobile-first" base styles are above, these
+   override specific rules for smaller viewports.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Breakpoint 1: Tablet / narrow desktop  (≤ 768px)
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+
+  /* --- Overall page layout ---
+     Remove the fixed max-width so content fills the screen,
+     and reduce horizontal padding so text doesn't crowd edges. */
+  .main-content {
+    padding: 20px 16px 36px;
+  }
+
+  /* --- Site header ---
+     Shrink the large banner heading so it doesn't overflow. */
+  .site-header h1 {
+    font-size: 1.7rem;
+  }
+
+  /* --- Navigation / site menu ---
+     Allow nav items to wrap to a second row instead of
+     overflowing off-screen on tablets. */
+  .navbar ul {
+    flex-wrap: wrap;
+  }
+
+  .navbar ul li a {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+  }
+
+  /* --- Concept grid ---
+     Switch from 2-column grid to a single column so each
+     concept card gets full width and stays readable. */
+  .concept-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Tables ---
+     Allow the table to scroll horizontally rather than
+     squeezing columns too narrow to read. */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+  }
+
+  /* --- Images ---
+     Already max-width: 100%, but cap tall images so they
+     don't push content way down the page. */
+  img {
+    max-height: 220px;
+    object-fit: cover;
+  }
+
+  /* --- Headings ---
+     Scale down so large headings don't dominate small screens. */
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.25rem; }
+}
+
+
+/* ----------------------------------------------------------
+   Breakpoint 2: Mobile phones  (≤ 480px)
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+
+  /* --- Site header ---
+     Further reduce title size for small phone screens. */
+  .site-header {
+    padding: 24px 14px 20px;
+  }
+
+  .site-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .site-header p {
+    font-size: 0.9rem;
+  }
+
+  /* --- Navigation / site menu ---
+     Stack every nav link to its own full-width row so
+     touch targets are large enough for fingers (min 44px tall). */
+  .navbar ul {
+    flex-direction: column;
+  }
+
+  .navbar ul li {
+    width: 100%;
+  }
+
+  .navbar ul li a {
+    padding: 14px 18px;   /* taller rows = easier to tap */
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* --- Main content ---
+     Minimal side padding on small screens to maximize content width. */
+  .main-content {
+    padding: 16px 12px 28px;
+  }
+
+  /* --- Cards ---
+     Reduce padding inside cards on phones. */
+  .card {
+    padding: 16px 14px;
+  }
+
+  /* --- Headings ---
+     Keep text readable without being oversized. */
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.15rem; }
+  h3 { font-size: 1rem; }
+
+  /* --- Body text ---
+     16px base is already good; slightly tighter line-height
+     saves vertical space without hurting readability. */
+  body {
+    line-height: 1.6;
+  }
+
+  /* --- About page profile ---
+     Stack photo and bio text vertically instead of side-by-side. */
+  .profile-section {
+    flex-direction: column;
+  }
+
+  /* --- Quiz form controls ---
+     Make sure touch targets on radio/checkbox rows are tall enough. */
+  .option-row {
+    padding: 12px 14px;
+  }
+
+  /* Fill-in-the-blank input: full width on phone. */
+  .fill-blank-input {
+    max-width: 100%;
+  }
+
+  /* Quiz buttons: stack vertically and go full-width for easy tapping. */
+  .quiz-actions {
+    flex-direction: column;
+  }
+
+  .btn-submit,
+  .btn-reset {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* --- Images ---
+     Let images be full-width but not too tall on phone screens. */
+  img {
+    max-height: 180px;
+  }
+
+  /* --- Tables ---
+     Smaller font inside table cells to prevent overflow. */
+  td, th {
+    font-size: 0.82rem;
+    padding: 7px 9px;
+  }
 }
