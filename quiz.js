@@ -55,6 +55,10 @@ const PASS_THRESHOLD = 0.70;
 function collectAnswers() {
   const answers = {};
 
+  // Student name
+  const nameInput = document.getElementById('student-name');
+  answers.name = nameInput ? nameInput.value.trim() : '';
+
   // Q1: fill-in-the-blank text input
   const q1Input = document.getElementById('q1');
   answers.q1 = q1Input ? q1Input.value.trim() : '';
@@ -172,6 +176,13 @@ function showResults(answers) {
 
   // ---- Show the results section ----
   const resultsSection = document.getElementById('results-section');
+
+  // Display student name
+  const nameDisplay = document.getElementById('results-name');
+  if (nameDisplay && window._submittedName) {
+    nameDisplay.textContent = `Submitted by: ${window._submittedName}`;
+  }
+
   resultsSection.style.display = 'block';
 
   // Scroll smoothly to results so the user can see their score
@@ -180,6 +191,7 @@ function showResults(answers) {
 
 // ---- Validate: ensure every question has been answered ----
 function validate(answers) {
+  if (!answers.name) return 'Please enter your name before submitting.';
   if (!answers.q1) return 'Please answer Question 1 (fill in the blank).';
   if (!answers.q2) return 'Please select an answer for Question 2.';
   if (!answers.q3) return 'Please select an answer for Question 3.';
@@ -198,6 +210,9 @@ document.getElementById('submit-btn').addEventListener('click', function () {
     return;
   }
 
+  // Save name for display in results
+  window._submittedName = answers.name;
+
   // Hide the form and show results
   document.getElementById('quiz-form').style.display = 'none';
   showResults(answers);
@@ -205,13 +220,14 @@ document.getElementById('submit-btn').addEventListener('click', function () {
 
 // ---- Reset / Retake Handler ----
 // Clears all inputs and hides the results section
-document.getElementById('reset-btn').addEventListener('click', function () {
+document.getElementById('retake-btn').addEventListener('click', function () {
   // Reset all form inputs to their default state
   document.getElementById('quiz-form').reset();
 
   // Clear the dynamically inserted results HTML
   document.getElementById('score-banner-container').innerHTML = '';
   document.getElementById('results-detail').innerHTML = '';
+  document.getElementById('results-name').textContent = '';
 
   // Re-show the form and hide results
   document.getElementById('quiz-form').style.display = 'flex';

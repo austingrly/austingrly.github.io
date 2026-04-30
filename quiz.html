@@ -275,9 +275,25 @@
 
       <!-- =====================================================
            QUIZ FORM
-           Contains: 1 fill-in-blank, 3 multiple choice, 1 multi-select
+           Contains: name field, 1 fill-in-blank, 3 multiple choice, 1 multi-select
            ===================================================== -->
       <form id="quiz-form" class="quiz-form" novalidate>
+
+        <!-- ---- Name Field ---- -->
+        <div class="question-block" id="name-block">
+          <label class="question-label" for="student-name">Your Name</label>
+          <span class="question-hint">Enter your full name before submitting.</span>
+          <input
+            type="text"
+            id="student-name"
+            name="student-name"
+            class="fill-blank-input"
+            placeholder="Full name..."
+            autocomplete="name"
+            spellcheck="false"
+            aria-label="Your full name"
+          />
+        </div>
 
         <!-- ---- Question 1: Fill-in-the-blank ---- -->
         <div class="question-block" id="q1-block">
@@ -401,10 +417,16 @@
            Displays: overall pass/fail, total score, per-question breakdown.
            ===================================================== -->
       <section id="results-section" aria-live="polite">
+        <!-- Student name displayed at top of results -->
+        <div id="results-name" style="margin-bottom:1rem; font-size:1rem; color:var(--primary); font-weight:600;"></div>
         <!-- Score banner inserted here by JS -->
         <div id="score-banner-container"></div>
         <!-- Per-question result cards inserted here by JS -->
         <div id="results-detail"></div>
+        <!-- Retake button shown after submission -->
+        <div class="quiz-actions" style="margin-top:1.5rem;">
+          <button type="button" class="btn-reset" id="retake-btn">Retake Quiz</button>
+        </div>
       </section>
 
     </main>
